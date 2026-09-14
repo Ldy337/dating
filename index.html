@@ -711,151 +711,136 @@
            確認日期
         ========================= */
 
-        function confirmDate() {
+
+function confirmDate() {
+
+    const date =
+        document.getElementById("date").value;
 
 
-            const date =
-                document.getElementById(
-                    "date"
-                ).value;
+    /* 沒有選日期 */
+
+    if (date === "") {
+
+        document.getElementById("result").innerHTML =
+
+            '<div class="message warning">' +
+            '請先選擇日期 😆' +
+            '</div>';
+
+        return;
+    }
 
 
-            /* 沒有選日期 */
+    /* 日期格式 */
 
-            if (
-                date === ""
-            ) {
-
-
-                document.getElementById(
-                    "result"
-                ).innerHTML =
-
-                    '<div class="message warning">' +
-                    '請先選擇日期 😆' +
-                    '</div>';
+    const formattedDate =
+        date.replaceAll("-", "/");
 
 
-                return;
+    /* =========================
+       顯示「正在寄送」
+    ========================= */
 
-            }
+    document.getElementById("dateSection").innerHTML =
 
+        '<div class="message success">' +
+        '好期待跟妳約會 ❤️' +
+        '</div>' +
 
+        '<p>' +
+        '日期：' +
+        formattedDate +
+        '</p>' +
 
-            /* =========================
-               日期格式
-               2026-09-20
-               ↓
-               2026/09/20
-            ========================= */
-
-            const formattedDate =
-                date.replaceAll(
-                    "-",
-                    "/"
-                );
-
-
-
-            /* =========================
-               準備寄出的資料
-            ========================= */
-
-            const templateParams = {
-
-                date: formattedDate
-
-            };
+        '<p class="email-status">' +
+        '📧 正在寄送通知...' +
+        '</p>';
 
 
+    /* =========================
+       準備寄出的資料
+    ========================= */
 
-            /* =========================
-               寄送 Email
-            ========================= */
+    const templateParams = {
 
-            emailjs.send(
-                EMAIL_SERVICE_ID,
-                EMAIL_TEMPLATE_ID,
-                templateParams
-            )
+        date: formattedDate
 
-            .then(
-                function(response) {
-
-                    console.log(
-                        "Email 寄送成功",
-                        response.status,
-                        response.text
-                    );
+    };
 
 
-                    /* =========================
-                       寄信成功
-                    ========================= */
+    /* =========================
+       寄送 Email
+    ========================= */
 
-                    document.getElementById(
-                        "dateSection"
-                    ).innerHTML =
+    emailjs.send(
+        "service_2v67h7e",
+        "template_3ce95it",
+        templateParams
+    )
 
-                        '<div class="message success">' +
+    .then(function(response) {
 
-                        '好期待跟妳約會 ❤️' +
-
-                        '</div>' +
-
-                        '<p>' +
-
-                        '日期：' +
-
-                        formattedDate +
-
-                        '</p>';
-
-                }
-            )
-
-            .catch(
-                function(error) {
-
-                    console.error(
-                        "EmailJS 寄送失敗：",
-                        error
-                    );
+        console.log(
+            "Email 寄送成功",
+            response.status,
+            response.text
+        );
 
 
-                    /* =========================
-                       即使寄信失敗
-                       網頁仍顯示約會結果
-                    ========================= */
+        /* =========================
+           寄送成功
+        ========================= */
 
-                    document.getElementById(
-                        "dateSection"
-                    ).innerHTML =
+        document.getElementById("dateSection").innerHTML =
 
-                        '<div class="message success">' +
+            '<div class="message success">' +
+            '好期待跟妳約會 ❤️' +
+            '</div>' +
 
-                        '好期待跟妳約會 ❤️' +
+            '<p>' +
+            '日期：' +
+            formattedDate +
+            '</p>' +
 
-                        '</div>' +
+            '<p class="email-status">' +
+            '📧 通知已成功寄出！' +
+            '</p>';
 
-                        '<p>' +
+    })
 
-                        '日期：' +
+    .catch(function(error) {
 
-                        formattedDate +
+        console.error(
+            "EmailJS 寄送失敗：",
+            error
+        );
 
-                        '</p>' +
 
-                        '<p class="email-status">' +
+        /* =========================
+           寄送失敗
+        ========================= */
 
-                        '通知寄送失敗，請稍後再試。' +
+        document.getElementById("dateSection").innerHTML =
 
-                        '</p>';
+            '<div class="message success">' +
+            '好期待跟妳約會 ❤️' +
+            '</div>' +
 
-                }
-            );
+            '<p>' +
+            '日期：' +
+            formattedDate +
+            '</p>' +
 
-        }
+            '<p class="email-status">' +
+            '⚠️ 通知寄送失敗，請稍後再試。' +
+            '</p>';
+
+    });
+
+}
+
+
 
     </script>
 

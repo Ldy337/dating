@@ -1,13 +1,24 @@
 ```html
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>約會邀請 ❤️</title>
 
+
     <style>
+
+        /* =========================
+           基本設定
+        ========================= */
 
         * {
             box-sizing: border-box;
@@ -15,41 +26,56 @@
 
 
         /* =========================
-           整個網頁背景
+           網頁背景
         ========================= */
 
         body {
-            font-family: Arial, "Microsoft JhengHei", sans-serif;
 
-            background-image: url("first.jpg");
+            font-family:
+                Arial,
+                "Microsoft JhengHei",
+                sans-serif;
+
+            background-image:
+                url("first.jpg");
+
             background-size: cover;
+
             background-position: center;
+
             background-repeat: no-repeat;
+
             background-attachment: fixed;
 
             margin: 0;
+
             min-height: 100vh;
 
             display: flex;
+
             justify-content: center;
 
-            /* 讓白色框框往下面 */
             align-items: flex-start;
+
+            /* 控制白色框框上下位置 */
             padding-top: 55vh;
         }
 
 
         /* =========================
-           背景淡淡的白色遮罩
+           背景淡白色遮罩
         ========================= */
 
         body::before {
+
             content: "";
 
             position: fixed;
+
             inset: 0;
 
-            background: rgba(255, 255, 255, 0.25);
+            background:
+                rgba(255, 255, 255, 0.25);
 
             z-index: -1;
         }
@@ -60,19 +86,23 @@
         ========================= */
 
         .box {
-            background: rgba(255, 255, 255, 0.88);
+
+            background:
+                rgba(255, 255, 255, 0.88);
 
             width: 85%;
+
             max-width: 380px;
 
-            padding: 22px 20px;
+            padding: 20px 18px;
 
             border-radius: 16px;
 
             text-align: center;
 
             box-shadow:
-                0 5px 25px rgba(0, 0, 0, 0.2);
+                0 5px 25px
+                rgba(0, 0, 0, 0.2);
         }
 
 
@@ -81,9 +111,11 @@
         ========================= */
 
         h1 {
+
             font-size: 23px;
 
             margin-top: 5px;
+
             margin-bottom: 20px;
         }
 
@@ -93,7 +125,10 @@
         ========================= */
 
         p {
+
             font-size: 17px;
+
+            margin: 10px 0;
         }
 
 
@@ -112,7 +147,7 @@
 
             border-radius: 10px;
 
-            margin: 12px 0;
+            margin: 10px 0;
 
             width: 85%;
 
@@ -142,21 +177,27 @@
 
         /* 是 */
         .yes {
+
             background: #4CAF50;
+
             color: white;
         }
 
 
         /* 否 */
         .no {
+
             background: #f44336;
+
             color: white;
         }
 
 
         /* 登入 */
         .login {
+
             background: #555;
+
             color: white;
         }
 
@@ -166,6 +207,7 @@
         ========================= */
 
         .date-section {
+
             display: none;
         }
 
@@ -175,32 +217,33 @@
         ========================= */
 
         .no-message {
+
             display: none;
         }
 
 
         /* =========================
-           訊息文字
+           成功 / 錯誤訊息
         ========================= */
 
         .message {
 
-            font-size: 23px;
+            font-size: 21px;
 
             font-weight: bold;
 
-            margin: 18px;
+            margin: 12px 0;
         }
 
 
-        /* 錯誤 */
         .warning {
+
             color: #f44336;
         }
 
 
-        /* 成功 */
         .success {
+
             color: #4CAF50;
         }
 
@@ -220,11 +263,24 @@
 
 
         /* =========================
-           一開始隱藏主要頁面
+           主要頁面一開始隱藏
         ========================= */
 
         #mainPage {
+
             display: none;
+        }
+
+
+        /* =========================
+           日期完成後的結果
+        ========================= */
+
+        #result p {
+
+            font-size: 17px;
+
+            margin-top: 5px;
         }
 
 
@@ -236,10 +292,8 @@
 
             body {
 
-                /* 手機稍微往下 */
                 padding-top: 52vh;
 
-                /* 手機不要固定背景 */
                 background-attachment: scroll;
             }
 
@@ -250,7 +304,7 @@
 
                 max-width: 350px;
 
-                padding: 20px 15px;
+                padding: 18px 15px;
             }
 
 
@@ -258,7 +312,7 @@
 
                 font-size: 21px;
 
-                margin-bottom: 18px;
+                margin-bottom: 16px;
             }
 
 
@@ -285,9 +339,16 @@
 
                 width: 90%;
             }
+
+
+            .message {
+
+                font-size: 20px;
+            }
         }
 
     </style>
+
 </head>
 
 
@@ -307,9 +368,15 @@
 
         <div id="loginPage">
 
-            <h1>🔐 小小秘密</h1>
+            <h1>
+                🔐 小小秘密
+            </h1>
 
-            <p>請輸入密碼</p>
+
+            <p>
+                請輸入密碼
+            </p>
+
 
             <input
                 type="password"
@@ -317,7 +384,9 @@
                 placeholder="請輸入密碼"
             >
 
+
             <br>
+
 
             <button
                 class="login"
@@ -336,14 +405,14 @@
 
 
         <!-- =========================
-             主要網頁
+             主要頁面
         ========================= -->
 
         <div id="mainPage">
 
 
             <!-- =========================
-                 問題
+                 約會問題
             ========================= -->
 
             <div id="question">
@@ -382,8 +451,11 @@
             >
 
                 <div class="message warning">
+
                     沒有這個選項 😆
+
                 </div>
+
 
                 <p>
                     請重新選擇！
@@ -394,7 +466,7 @@
 
 
             <!-- =========================
-                 選擇是
+                 選擇是 → 日期
             ========================= -->
 
             <div
@@ -402,13 +474,8 @@
                 class="date-section"
             >
 
-                <h1>
-                    太好了 ❤️
-                </h1>
-
-
                 <p>
-                    請選擇妳方便的日期：
+                    請選擇日期：
                 </p>
 
 
@@ -429,6 +496,13 @@
                 </button>
 
 
+                <!--
+                    按下確定後，
+                    這裡只會顯示：
+                    好期待跟妳約會 ❤️
+                    日期
+                -->
+
                 <div id="result"></div>
 
             </div>
@@ -439,10 +513,6 @@
 
 
 
-    <!-- =========================
-         JavaScript
-    ========================= -->
-
     <script>
 
 
@@ -450,7 +520,8 @@
            密碼
         ========================= */
 
-        const correctPassword = "123456789";
+        const correctPassword =
+            "123456789";
 
 
 
@@ -460,35 +531,44 @@
 
         function checkPassword() {
 
+
             const password =
-                document.getElementById("password").value;
+                document.getElementById(
+                    "password"
+                ).value;
 
 
-            if (password === correctPassword) {
+            if (
+                password ===
+                correctPassword
+            ) {
 
 
                 /* 隱藏密碼頁面 */
 
                 document.getElementById(
                     "loginPage"
-                ).style.display = "none";
+                ).style.display =
+                    "none";
 
 
-                /* 顯示主要網頁 */
+                /* 顯示主要頁面 */
 
                 document.getElementById(
                     "mainPage"
-                ).style.display = "block";
+                ).style.display =
+                    "block";
 
 
             } else {
 
 
-                /* 顯示錯誤 */
+                /* 密碼錯誤 */
 
                 document.getElementById(
                     "wrongPassword"
-                ).style.display = "block";
+                ).style.display =
+                    "block";
 
             }
 
@@ -506,7 +586,10 @@
             "keydown",
             function(event) {
 
-                if (event.key === "Enter") {
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
 
                     checkPassword();
 
@@ -518,7 +601,7 @@
 
 
         /* =========================
-           選擇「是」
+           按「是」
         ========================= */
 
         function chooseYes() {
@@ -528,21 +611,23 @@
 
             document.getElementById(
                 "question"
-            ).style.display = "none";
+            ).style.display =
+                "none";
 
 
             /* 顯示日期 */
 
             document.getElementById(
                 "dateSection"
-            ).style.display = "block";
+            ).style.display =
+                "block";
 
         }
 
 
 
         /* =========================
-           選擇「否」
+           按「否」
         ========================= */
 
         function chooseNo() {
@@ -552,32 +637,39 @@
 
             document.getElementById(
                 "question"
-            ).style.display = "none";
+            ).style.display =
+                "none";
 
 
-            /* 顯示訊息 */
+            /* 顯示沒有這個選項 */
 
             document.getElementById(
                 "noMessage"
-            ).style.display = "block";
+            ).style.display =
+                "block";
 
 
             /* 1.5 秒後回到問題 */
 
-            setTimeout(function() {
+            setTimeout(
+                function() {
 
 
-                document.getElementById(
-                    "noMessage"
-                ).style.display = "none";
+                    document.getElementById(
+                        "noMessage"
+                    ).style.display =
+                        "none";
 
 
-                document.getElementById(
-                    "question"
-                ).style.display = "block";
+                    document.getElementById(
+                        "question"
+                    ).style.display =
+                        "block";
 
 
-            }, 1500);
+                },
+                1500
+            );
 
         }
 
@@ -596,9 +688,11 @@
                 ).value;
 
 
-            /* 沒選日期 */
+            /* 沒有選日期 */
 
-            if (date === "") {
+            if (
+                date === ""
+            ) {
 
 
                 document.getElementById(
@@ -615,11 +709,32 @@
             }
 
 
-            /* 顯示成功 */
+
+            /* =========================
+               日期格式
+               例如：
+               2026-09-20
+               變成：
+               2026/09/20
+            ========================= */
+
+            const formattedDate =
+                date.replaceAll(
+                    "-",
+                    "/"
+                );
+
+
+
+            /* =========================
+               隱藏日期選擇區
+            ========================= */
 
             document.getElementById(
-                "result"
+                "dateSection"
             ).innerHTML =
+
+                '<div id="result">' +
 
                 '<div class="message success">' +
                 '好期待跟妳約會 ❤️' +
@@ -627,8 +742,10 @@
 
                 '<p>' +
                 '日期：' +
-                date +
-                '</p>';
+                formattedDate +
+                '</p>' +
+
+                '</div>';
 
         }
 
@@ -636,5 +753,6 @@
 
 
 </body>
+
 </html>
 ```

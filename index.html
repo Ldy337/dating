@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 
@@ -11,7 +11,30 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>約會邀請 </title>
+    <title>約會邀請</title>
+
+
+    <!-- =========================
+         EmailJS
+    ========================= -->
+
+    <script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+
+
+    <script>
+
+        /* =========================
+           初始化 EmailJS
+        ========================= */
+
+        emailjs.init({
+            publicKey: "F-4t6phcbgXnSS0tL"
+        });
+
+    </script>
 
 
     <style>
@@ -63,7 +86,7 @@
 
 
         /* =========================
-           登入後的背景遮罩
+           背景遮罩
         ========================= */
 
         body::before {
@@ -249,6 +272,20 @@
 
 
         /* =========================
+           寄信狀態
+        ========================= */
+
+        .email-status {
+
+            font-size: 14px;
+
+            margin-top: 10px;
+
+            color: #777;
+        }
+
+
+        /* =========================
            密碼錯誤
         ========================= */
 
@@ -333,6 +370,7 @@
 
                 font-size: 20px;
             }
+
         }
 
     </style>
@@ -507,6 +545,19 @@
 
 
         /* =========================
+           EmailJS 設定
+        ========================= */
+
+        const EMAIL_SERVICE_ID =
+            "service_2v67h7e";
+
+
+        const EMAIL_TEMPLATE_ID =
+            "template_3ce95it";
+
+
+
+        /* =========================
            檢查密碼
         ========================= */
 
@@ -525,18 +576,14 @@
             ) {
 
 
-                /* =================================
-                   ① 顯示背景照片
-                ================================= */
+                /* 顯示背景照片 */
 
                 document.body.style.backgroundImage =
                     'url("first.jpg")';
 
 
 
-                /* =================================
-                   ② 隱藏登入頁面
-                ================================= */
+                /* 隱藏登入頁面 */
 
                 document.getElementById(
                     "loginPage"
@@ -545,9 +592,7 @@
 
 
 
-                /* =================================
-                   ③ 顯示主要頁面
-                ================================= */
+                /* 顯示主要頁面 */
 
                 document.getElementById(
                     "mainPage"
@@ -558,9 +603,7 @@
             } else {
 
 
-                /* =================================
-                   密碼錯誤
-                ================================= */
+                /* 密碼錯誤 */
 
                 document.getElementById(
                     "wrongPassword"
@@ -715,26 +758,102 @@
 
 
             /* =========================
-               顯示最終結果
+               準備寄出的資料
             ========================= */
 
-            document.getElementById(
-                "dateSection"
-            ).innerHTML =
+            const templateParams = {
 
-                '<div class="message success">' +
+                date: formattedDate
 
-                '好期待跟妳約會 ❤️' +
+            };
 
-                '</div>' +
 
-                '<p>' +
 
-                '日期：' +
+            /* =========================
+               寄送 Email
+            ========================= */
 
-                formattedDate +
+            emailjs.send(
+                EMAIL_SERVICE_ID,
+                EMAIL_TEMPLATE_ID,
+                templateParams
+            )
 
-                '</p>';
+            .then(
+                function(response) {
+
+                    console.log(
+                        "Email 寄送成功",
+                        response.status,
+                        response.text
+                    );
+
+
+                    /* =========================
+                       寄信成功
+                    ========================= */
+
+                    document.getElementById(
+                        "dateSection"
+                    ).innerHTML =
+
+                        '<div class="message success">' +
+
+                        '好期待跟妳約會 ❤️' +
+
+                        '</div>' +
+
+                        '<p>' +
+
+                        '日期：' +
+
+                        formattedDate +
+
+                        '</p>';
+
+                }
+            )
+
+            .catch(
+                function(error) {
+
+                    console.error(
+                        "EmailJS 寄送失敗：",
+                        error
+                    );
+
+
+                    /* =========================
+                       即使寄信失敗
+                       網頁仍顯示約會結果
+                    ========================= */
+
+                    document.getElementById(
+                        "dateSection"
+                    ).innerHTML =
+
+                        '<div class="message success">' +
+
+                        '好期待跟妳約會 ❤️' +
+
+                        '</div>' +
+
+                        '<p>' +
+
+                        '日期：' +
+
+                        formattedDate +
+
+                        '</p>' +
+
+                        '<p class="email-status">' +
+
+                        '通知寄送失敗，請稍後再試。' +
+
+                        '</p>';
+
+                }
+            );
 
         }
 
@@ -744,4 +863,4 @@
 </body>
 
 </html>
-
+```

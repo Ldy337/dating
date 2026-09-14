@@ -4,28 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>約會選擇</title>
+    <title>約會邀請 ❤️</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, "Microsoft JhengHei", sans-serif;
-            background: #f7f7f7;
-            text-align: center;
-            padding-top: 100px;
+
+            background-image: url("first.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 背景遮罩 */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.35);
+            z-index: -1;
         }
 
         .box {
-            background: white;
+            background: rgba(255, 255, 255, 0.92);
+            width: 90%;
             max-width: 500px;
-            margin: auto;
             padding: 40px 25px;
             border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
             font-size: 28px;
             margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        input[type="password"],
+        input[type="date"] {
+            font-size: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin: 15px 0;
+            width: 80%;
+            max-width: 300px;
         }
 
         button {
@@ -47,14 +86,17 @@
             color: white;
         }
 
+        .login {
+            background: #555;
+            color: white;
+        }
+
         .date-section {
             display: none;
         }
 
-        input[type="date"] {
-            font-size: 20px;
-            padding: 10px;
-            margin: 20px;
+        .no-message {
+            display: none;
         }
 
         .message {
@@ -70,6 +112,16 @@
         .success {
             color: #4CAF50;
         }
+
+        #wrongPassword {
+            color: #f44336;
+            display: none;
+            font-size: 18px;
+        }
+
+        #mainPage {
+            display: none;
+        }
     </style>
 </head>
 
@@ -77,41 +129,80 @@
 
 <div class="box">
 
-    <!-- 第一題 -->
-    <div id="question">
-        <h1>妳願意跟我出去約會嗎？</h1>
+    <!-- 密碼頁面 -->
+    <div id="loginPage">
 
-        <button class="yes" onclick="chooseYes()">是 ❤️</button>
+        <h1>🔐 小小秘密</h1>
 
-        <button class="no" onclick="chooseNo()">否</button>
-    </div>
+        <p>請輸入密碼</p>
 
-
-    <!-- 選否後顯示 -->
-    <div id="noMessage" style="display:none;">
-        <div class="message warning">
-            沒有這個選項 😆
-        </div>
-        <p>請重新選擇！</p>
-    </div>
-
-
-    <!-- 選是後顯示日期 -->
-    <div id="dateSection" class="date-section">
-
-        <h1>太好了 ❤️</h1>
-
-        <p>請選擇妳方便的日期：</p>
-
-        <input type="date" id="date">
+        <input
+            type="password"
+            id="password"
+            placeholder="請輸入密碼"
+        >
 
         <br>
 
-        <button class="yes" onclick="confirmDate()">
-            確定日期
+        <button class="login" onclick="checkPassword()">
+            進入 ❤️
         </button>
 
-        <div id="result"></div>
+        <p id="wrongPassword">
+            密碼錯誤，再試一次 😆
+        </p>
+
+    </div>
+
+
+    <!-- 主要問題 -->
+    <div id="mainPage">
+
+        <div id="question">
+
+            <h1>妳願意跟我出去約會嗎？ ❤️</h1>
+
+            <button class="yes" onclick="chooseYes()">
+                是 ❤️
+            </button>
+
+            <button class="no" onclick="chooseNo()">
+                否
+            </button>
+
+        </div>
+
+
+        <!-- 選否 -->
+        <div id="noMessage" class="no-message">
+
+            <div class="message warning">
+                沒有這個選項 😆
+            </div>
+
+            <p>請重新選擇！</p>
+
+        </div>
+
+
+        <!-- 選是 -->
+        <div id="dateSection" class="date-section">
+
+            <h1>太好了 ❤️</h1>
+
+            <p>請選擇妳方便的日期：</p>
+
+            <input type="date" id="date">
+
+            <br>
+
+            <button class="yes" onclick="confirmDate()">
+                確定日期
+            </button>
+
+            <div id="result"></div>
+
+        </div>
 
     </div>
 
@@ -120,12 +211,53 @@
 
 <script>
 
+    // 密碼
+    const correctPassword = "123456789";
+
+
+    // 檢查密碼
+    function checkPassword() {
+
+        const password =
+            document.getElementById("password").value;
+
+        if (password === correctPassword) {
+
+            // 隱藏登入頁面
+            document.getElementById("loginPage").style.display = "none";
+
+            // 顯示主要網頁
+            document.getElementById("mainPage").style.display = "block";
+
+        } else {
+
+            // 顯示錯誤訊息
+            document.getElementById("wrongPassword").style.display = "block";
+
+        }
+    }
+
+
+    // 按 Enter 也可以登入
+    document.getElementById("password").addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+
+        }
+    );
+
+
     // 選擇「是」
     function chooseYes() {
 
         document.getElementById("question").style.display = "none";
 
         document.getElementById("dateSection").style.display = "block";
+
     }
 
 
@@ -136,6 +268,7 @@
 
         document.getElementById("noMessage").style.display = "block";
 
+
         // 1.5 秒後回到原問題
         setTimeout(function() {
 
@@ -144,13 +277,15 @@
             document.getElementById("question").style.display = "block";
 
         }, 1500);
+
     }
 
 
     // 確認日期
     function confirmDate() {
 
-        let date = document.getElementById("date").value;
+        const date =
+            document.getElementById("date").value;
 
         if (date === "") {
 
@@ -160,9 +295,11 @@
             return;
         }
 
+
         document.getElementById("result").innerHTML =
             '<div class="message success">好期待跟妳約會 ❤️</div>' +
             '<p>日期：' + date + '</p>';
+
     }
 
 </script>

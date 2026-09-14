@@ -16,17 +16,13 @@
 
     <style>
 
-        /* =========================
-           基本設定
-        ========================= */
-
         * {
             box-sizing: border-box;
         }
 
 
         /* =========================
-           網頁背景
+           整個網頁
         ========================= */
 
         body {
@@ -35,17 +31,6 @@
                 Arial,
                 "Microsoft JhengHei",
                 sans-serif;
-
-            background-image:
-                url("first.jpg");
-
-            background-size: cover;
-
-            background-position: center;
-
-            background-repeat: no-repeat;
-
-            background-attachment: fixed;
 
             margin: 0;
 
@@ -57,13 +42,28 @@
 
             align-items: flex-start;
 
-            /* 控制白色框框上下位置 */
             padding-top: 55vh;
+
+            /* 登入前的背景 */
+            background-color: #f5f5f5;
+
+            background-image: none;
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            background-attachment: fixed;
+
+            transition:
+                background-image 0.8s ease;
         }
 
 
         /* =========================
-           背景淡白色遮罩
+           登入後的背景遮罩
         ========================= */
 
         body::before {
@@ -133,7 +133,7 @@
 
 
         /* =========================
-           輸入框
+           密碼輸入框
         ========================= */
 
         input[type="password"],
@@ -223,7 +223,7 @@
 
 
         /* =========================
-           成功 / 錯誤訊息
+           訊息
         ========================= */
 
         .message {
@@ -269,18 +269,6 @@
         #mainPage {
 
             display: none;
-        }
-
-
-        /* =========================
-           日期完成後的結果
-        ========================= */
-
-        #result p {
-
-            font-size: 17px;
-
-            margin-top: 5px;
         }
 
 
@@ -363,7 +351,7 @@
 
 
         <!-- =========================
-             密碼頁面
+             登入頁面
         ========================= -->
 
         <div id="loginPage">
@@ -496,13 +484,6 @@
                 </button>
 
 
-                <!--
-                    按下確定後，
-                    這裡只會顯示：
-                    好期待跟妳約會 ❤️
-                    日期
-                -->
-
                 <div id="result"></div>
 
             </div>
@@ -544,7 +525,18 @@
             ) {
 
 
-                /* 隱藏密碼頁面 */
+                /* =================================
+                   ① 顯示背景照片
+                ================================= */
+
+                document.body.style.backgroundImage =
+                    'url("first.jpg")';
+
+
+
+                /* =================================
+                   ② 隱藏登入頁面
+                ================================= */
 
                 document.getElementById(
                     "loginPage"
@@ -552,7 +544,10 @@
                     "none";
 
 
-                /* 顯示主要頁面 */
+
+                /* =================================
+                   ③ 顯示主要頁面
+                ================================= */
 
                 document.getElementById(
                     "mainPage"
@@ -563,7 +558,9 @@
             } else {
 
 
-                /* 密碼錯誤 */
+                /* =================================
+                   密碼錯誤
+                ================================= */
 
                 document.getElementById(
                     "wrongPassword"
@@ -607,15 +604,11 @@
         function chooseYes() {
 
 
-            /* 隱藏問題 */
-
             document.getElementById(
                 "question"
             ).style.display =
                 "none";
 
-
-            /* 顯示日期 */
 
             document.getElementById(
                 "dateSection"
@@ -633,15 +626,11 @@
         function chooseNo() {
 
 
-            /* 隱藏問題 */
-
             document.getElementById(
                 "question"
             ).style.display =
                 "none";
 
-
-            /* 顯示沒有這個選項 */
 
             document.getElementById(
                 "noMessage"
@@ -712,9 +701,8 @@
 
             /* =========================
                日期格式
-               例如：
                2026-09-20
-               變成：
+               ↓
                2026/09/20
             ========================= */
 
@@ -727,25 +715,26 @@
 
 
             /* =========================
-               隱藏日期選擇區
+               顯示最終結果
             ========================= */
 
             document.getElementById(
                 "dateSection"
             ).innerHTML =
 
-                '<div id="result">' +
-
                 '<div class="message success">' +
+
                 '好期待跟妳約會 ❤️' +
+
                 '</div>' +
 
                 '<p>' +
-                '日期：' +
-                formattedDate +
-                '</p>' +
 
-                '</div>';
+                '日期：' +
+
+                formattedDate +
+
+                '</p>';
 
         }
 

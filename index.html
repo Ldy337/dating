@@ -1,107 +1,172 @@
+```html
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>是與否日期選擇</title>
-<style>
-    body {
-        font-family: "Microsoft JhengHei", Arial, sans-serif;
-        background: #f5f5f5;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-    }
-    .box {
-        background: white;
-        width: min(90%, 420px);
-        padding: 30px;
-        border-radius: 16px;
-        box-shadow: 0 4px 18px rgba(0,0,0,.12);
-        text-align: center;
-    }
-    h1 {
-        margin-top: 0;
-        font-size: 24px;
-    }
-    .question {
-        font-size: 20px;
-        margin: 25px 0 15px;
-    }
-    button {
-        font-size: 18px;
-        padding: 12px 30px;
-        margin: 8px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        background: white;
-        cursor: pointer;
-    }
-    button:hover, button.selected {
-        background: #e9e9e9;
-    }
-    #dateArea {
-        display: none;
-        margin-top: 25px;
-    }
-    input[type="date"] {
-        font-size: 18px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-    }
-    #result {
-        margin-top: 20px;
-        font-size: 17px;
-        font-weight: bold;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>約會選擇</title>
+
+    <style>
+        body {
+            font-family: Arial, "Microsoft JhengHei", sans-serif;
+            background: #f7f7f7;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .box {
+            background: white;
+            max-width: 500px;
+            margin: auto;
+            padding: 40px 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 12px 35px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .yes {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .no {
+            background: #f44336;
+            color: white;
+        }
+
+        .date-section {
+            display: none;
+        }
+
+        input[type="date"] {
+            font-size: 20px;
+            padding: 10px;
+            margin: 20px;
+        }
+
+        .message {
+            font-size: 26px;
+            font-weight: bold;
+            margin: 20px;
+        }
+
+        .warning {
+            color: #f44336;
+        }
+
+        .success {
+            color: #4CAF50;
+        }
+    </style>
 </head>
+
 <body>
 
 <div class="box">
-    <h1>問卷調查</h1>
 
-    <div class="question">你願意跟我出去約會嗎？</div>
+    <!-- 第一題 -->
+    <div id="question">
+        <h1>妳願意跟我出去約會嗎？</h1>
 
-    <button id="yesBtn" onclick="choose('是')">是</button>
-    <button id="noBtn" onclick="choose('否')">否</button>
+        <button class="yes" onclick="chooseYes()">是 ❤️</button>
 
-    <div id="dateArea">
-        <div class="question">請選擇日期</div>
-        <input type="date" id="date" onchange="showResult()">
+        <button class="no" onclick="chooseNo()">否</button>
     </div>
 
-    <div id="result"></div>
+
+    <!-- 選否後顯示 -->
+    <div id="noMessage" style="display:none;">
+        <div class="message warning">
+            沒有這個選項 😆
+        </div>
+        <p>請重新選擇！</p>
+    </div>
+
+
+    <!-- 選是後顯示日期 -->
+    <div id="dateSection" class="date-section">
+
+        <h1>太好了 ❤️</h1>
+
+        <p>請選擇妳方便的日期：</p>
+
+        <input type="date" id="date">
+
+        <br>
+
+        <button class="yes" onclick="confirmDate()">
+            確定日期
+        </button>
+
+        <div id="result"></div>
+
+    </div>
+
 </div>
 
+
 <script>
-function choose(answer) {
-    document.getElementById("yesBtn").classList.remove("selected");
-    document.getElementById("noBtn").classList.remove("selected");
 
-    if (answer === "是") {
-        document.getElementById("yesBtn").classList.add("selected");
-        document.getElementById("dateArea").style.display = "block";
-        document.getElementById("result").textContent = "";
-    } else {
-        document.getElementById("noBtn").classList.add("selected");
-        document.getElementById("dateArea").style.display = "none";
-        document.getElementById("date").value = "";
-        document.getElementById("result").textContent = "你選擇了：否";
-    }
-}
+    // 選擇「是」
+    function chooseYes() {
 
-function showResult() {
-    const date = document.getElementById("date").value;
-    if (date) {
-        document.getElementById("result").textContent =
-            "你選擇了：是，日期是 " + date;
+        document.getElementById("question").style.display = "none";
+
+        document.getElementById("dateSection").style.display = "block";
     }
-}
+
+
+    // 選擇「否」
+    function chooseNo() {
+
+        document.getElementById("question").style.display = "none";
+
+        document.getElementById("noMessage").style.display = "block";
+
+        // 1.5 秒後回到原問題
+        setTimeout(function() {
+
+            document.getElementById("noMessage").style.display = "none";
+
+            document.getElementById("question").style.display = "block";
+
+        }, 1500);
+    }
+
+
+    // 確認日期
+    function confirmDate() {
+
+        let date = document.getElementById("date").value;
+
+        if (date === "") {
+
+            document.getElementById("result").innerHTML =
+                '<div class="message warning">請先選擇日期 😆</div>';
+
+            return;
+        }
+
+        document.getElementById("result").innerHTML =
+            '<div class="message success">好期待跟妳約會 ❤️</div>' +
+            '<p>日期：' + date + '</p>';
+    }
+
 </script>
 
 </body>
 </html>
+```

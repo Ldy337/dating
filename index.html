@@ -4,12 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>約會邀請 ❤️</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
+
+
+        /* =========================
+           整個網頁背景
+        ========================= */
 
         body {
             font-family: Arial, "Microsoft JhengHei", sans-serif;
@@ -25,284 +32,608 @@
 
             display: flex;
             justify-content: center;
-            align-items: center;
+
+            /* 讓白色框框往下面 */
+            align-items: flex-start;
+            padding-top: 55vh;
         }
 
-        /* 背景遮罩 */
+
+        /* =========================
+           背景淡淡的白色遮罩
+        ========================= */
+
         body::before {
             content: "";
+
             position: fixed;
             inset: 0;
-            background: rgba(255, 255, 255, 0.35);
+
+            background: rgba(255, 255, 255, 0.25);
+
             z-index: -1;
         }
 
+
+        /* =========================
+           白色內容框
+        ========================= */
+
         .box {
-            background: rgba(255, 255, 255, 0.92);
-            width: 90%;
-            max-width: 500px;
-            padding: 40px 25px;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.88);
+
+            width: 85%;
+            max-width: 380px;
+
+            padding: 22px 20px;
+
+            border-radius: 16px;
+
             text-align: center;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+
+            box-shadow:
+                0 5px 25px rgba(0, 0, 0, 0.2);
         }
+
+
+        /* =========================
+           標題
+        ========================= */
 
         h1 {
-            font-size: 28px;
-            margin-bottom: 30px;
+            font-size: 23px;
+
+            margin-top: 5px;
+            margin-bottom: 20px;
         }
 
+
+        /* =========================
+           一般文字
+        ========================= */
+
         p {
-            font-size: 18px;
+            font-size: 17px;
         }
+
+
+        /* =========================
+           輸入框
+        ========================= */
 
         input[type="password"],
         input[type="date"] {
-            font-size: 20px;
-            padding: 12px;
+
+            font-size: 18px;
+
+            padding: 10px;
+
             border: 1px solid #ccc;
+
             border-radius: 10px;
-            margin: 15px 0;
-            width: 80%;
-            max-width: 300px;
+
+            margin: 12px 0;
+
+            width: 85%;
+
+            max-width: 280px;
         }
 
+
+        /* =========================
+           按鈕
+        ========================= */
+
         button {
-            font-size: 20px;
-            padding: 12px 35px;
-            margin: 10px;
+
+            font-size: 18px;
+
+            padding: 10px 28px;
+
+            margin: 8px;
+
             border: none;
+
             border-radius: 10px;
+
             cursor: pointer;
         }
 
+
+        /* 是 */
         .yes {
             background: #4CAF50;
             color: white;
         }
 
+
+        /* 否 */
         .no {
             background: #f44336;
             color: white;
         }
 
+
+        /* 登入 */
         .login {
             background: #555;
             color: white;
         }
 
+
+        /* =========================
+           日期區域
+        ========================= */
+
         .date-section {
             display: none;
         }
+
+
+        /* =========================
+           否的訊息
+        ========================= */
 
         .no-message {
             display: none;
         }
 
+
+        /* =========================
+           訊息文字
+        ========================= */
+
         .message {
-            font-size: 26px;
+
+            font-size: 23px;
+
             font-weight: bold;
-            margin: 20px;
+
+            margin: 18px;
         }
 
+
+        /* 錯誤 */
         .warning {
             color: #f44336;
         }
 
+
+        /* 成功 */
         .success {
             color: #4CAF50;
         }
 
+
+        /* =========================
+           密碼錯誤
+        ========================= */
+
         #wrongPassword {
+
             color: #f44336;
+
             display: none;
-            font-size: 18px;
+
+            font-size: 16px;
         }
+
+
+        /* =========================
+           一開始隱藏主要頁面
+        ========================= */
 
         #mainPage {
             display: none;
         }
+
+
+        /* =========================
+           手機版
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                /* 手機稍微往下 */
+                padding-top: 52vh;
+
+                /* 手機不要固定背景 */
+                background-attachment: scroll;
+            }
+
+
+            .box {
+
+                width: 88%;
+
+                max-width: 350px;
+
+                padding: 20px 15px;
+            }
+
+
+            h1 {
+
+                font-size: 21px;
+
+                margin-bottom: 18px;
+            }
+
+
+            p {
+
+                font-size: 16px;
+            }
+
+
+            button {
+
+                font-size: 17px;
+
+                padding: 9px 24px;
+
+                margin: 6px;
+            }
+
+
+            input[type="password"],
+            input[type="date"] {
+
+                font-size: 17px;
+
+                width: 90%;
+            }
+        }
+
     </style>
 </head>
 
+
 <body>
 
-<div class="box">
 
-    <!-- 密碼頁面 -->
-    <div id="loginPage">
+    <!-- =========================
+         白色內容框
+    ========================= -->
 
-        <h1>🔐 小小秘密</h1>
-
-        <p>請輸入密碼</p>
-
-        <input
-            type="password"
-            id="password"
-            placeholder="請輸入密碼"
-        >
-
-        <br>
-
-        <button class="login" onclick="checkPassword()">
-            進入 ❤️
-        </button>
-
-        <p id="wrongPassword">
-            密碼錯誤，再試一次 😆
-        </p>
-
-    </div>
+    <div class="box">
 
 
-    <!-- 主要問題 -->
-    <div id="mainPage">
+        <!-- =========================
+             密碼頁面
+        ========================= -->
 
-        <div id="question">
+        <div id="loginPage">
 
-            <h1>妳願意跟我出去約會嗎？ ❤️</h1>
+            <h1>🔐 小小秘密</h1>
 
-            <button class="yes" onclick="chooseYes()">
-                是 ❤️
-            </button>
+            <p>請輸入密碼</p>
 
-            <button class="no" onclick="chooseNo()">
-                否
-            </button>
-
-        </div>
-
-
-        <!-- 選否 -->
-        <div id="noMessage" class="no-message">
-
-            <div class="message warning">
-                沒有這個選項 😆
-            </div>
-
-            <p>請重新選擇！</p>
-
-        </div>
-
-
-        <!-- 選是 -->
-        <div id="dateSection" class="date-section">
-
-            <h1>太好了 ❤️</h1>
-
-            <p>請選擇妳方便的日期：</p>
-
-            <input type="date" id="date">
+            <input
+                type="password"
+                id="password"
+                placeholder="請輸入密碼"
+            >
 
             <br>
 
-            <button class="yes" onclick="confirmDate()">
-                確定日期
+            <button
+                class="login"
+                onclick="checkPassword()"
+            >
+                進入 ❤️
             </button>
 
-            <div id="result"></div>
+
+            <p id="wrongPassword">
+                密碼錯誤，再試一次 😆
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             主要網頁
+        ========================= -->
+
+        <div id="mainPage">
+
+
+            <!-- =========================
+                 問題
+            ========================= -->
+
+            <div id="question">
+
+                <h1>
+                    妳願意跟我出去約會嗎？ ❤️
+                </h1>
+
+
+                <button
+                    class="yes"
+                    onclick="chooseYes()"
+                >
+                    是 ❤️
+                </button>
+
+
+                <button
+                    class="no"
+                    onclick="chooseNo()"
+                >
+                    否
+                </button>
+
+            </div>
+
+
+
+            <!-- =========================
+                 選擇否
+            ========================= -->
+
+            <div
+                id="noMessage"
+                class="no-message"
+            >
+
+                <div class="message warning">
+                    沒有這個選項 😆
+                </div>
+
+                <p>
+                    請重新選擇！
+                </p>
+
+            </div>
+
+
+
+            <!-- =========================
+                 選擇是
+            ========================= -->
+
+            <div
+                id="dateSection"
+                class="date-section"
+            >
+
+                <h1>
+                    太好了 ❤️
+                </h1>
+
+
+                <p>
+                    請選擇妳方便的日期：
+                </p>
+
+
+                <input
+                    type="date"
+                    id="date"
+                >
+
+
+                <br>
+
+
+                <button
+                    class="yes"
+                    onclick="confirmDate()"
+                >
+                    確定日期
+                </button>
+
+
+                <div id="result"></div>
+
+            </div>
 
         </div>
 
     </div>
 
-</div>
 
 
-<script>
+    <!-- =========================
+         JavaScript
+    ========================= -->
 
-    // 密碼
-    const correctPassword = "123456789";
-
-
-    // 檢查密碼
-    function checkPassword() {
-
-        const password =
-            document.getElementById("password").value;
-
-        if (password === correctPassword) {
-
-            // 隱藏登入頁面
-            document.getElementById("loginPage").style.display = "none";
-
-            // 顯示主要網頁
-            document.getElementById("mainPage").style.display = "block";
-
-        } else {
-
-            // 顯示錯誤訊息
-            document.getElementById("wrongPassword").style.display = "block";
-
-        }
-    }
+    <script>
 
 
-    // 按 Enter 也可以登入
-    document.getElementById("password").addEventListener(
-        "keydown",
-        function(event) {
+        /* =========================
+           密碼
+        ========================= */
 
-            if (event.key === "Enter") {
-                checkPassword();
+        const correctPassword = "123456789";
+
+
+
+        /* =========================
+           檢查密碼
+        ========================= */
+
+        function checkPassword() {
+
+            const password =
+                document.getElementById("password").value;
+
+
+            if (password === correctPassword) {
+
+
+                /* 隱藏密碼頁面 */
+
+                document.getElementById(
+                    "loginPage"
+                ).style.display = "none";
+
+
+                /* 顯示主要網頁 */
+
+                document.getElementById(
+                    "mainPage"
+                ).style.display = "block";
+
+
+            } else {
+
+
+                /* 顯示錯誤 */
+
+                document.getElementById(
+                    "wrongPassword"
+                ).style.display = "block";
+
             }
 
         }
-    );
 
 
-    // 選擇「是」
-    function chooseYes() {
 
-        document.getElementById("question").style.display = "none";
+        /* =========================
+           Enter 登入
+        ========================= */
 
-        document.getElementById("dateSection").style.display = "block";
+        document.getElementById(
+            "password"
+        ).addEventListener(
+            "keydown",
+            function(event) {
 
-    }
+                if (event.key === "Enter") {
 
+                    checkPassword();
 
-    // 選擇「否」
-    function chooseNo() {
+                }
 
-        document.getElementById("question").style.display = "none";
-
-        document.getElementById("noMessage").style.display = "block";
-
-
-        // 1.5 秒後回到原問題
-        setTimeout(function() {
-
-            document.getElementById("noMessage").style.display = "none";
-
-            document.getElementById("question").style.display = "block";
-
-        }, 1500);
-
-    }
+            }
+        );
 
 
-    // 確認日期
-    function confirmDate() {
 
-        const date =
-            document.getElementById("date").value;
+        /* =========================
+           選擇「是」
+        ========================= */
 
-        if (date === "") {
+        function chooseYes() {
 
-            document.getElementById("result").innerHTML =
-                '<div class="message warning">請先選擇日期 😆</div>';
 
-            return;
+            /* 隱藏問題 */
+
+            document.getElementById(
+                "question"
+            ).style.display = "none";
+
+
+            /* 顯示日期 */
+
+            document.getElementById(
+                "dateSection"
+            ).style.display = "block";
+
         }
 
 
-        document.getElementById("result").innerHTML =
-            '<div class="message success">好期待跟妳約會 ❤️</div>' +
-            '<p>日期：' + date + '</p>';
 
-    }
+        /* =========================
+           選擇「否」
+        ========================= */
 
-</script>
+        function chooseNo() {
+
+
+            /* 隱藏問題 */
+
+            document.getElementById(
+                "question"
+            ).style.display = "none";
+
+
+            /* 顯示訊息 */
+
+            document.getElementById(
+                "noMessage"
+            ).style.display = "block";
+
+
+            /* 1.5 秒後回到問題 */
+
+            setTimeout(function() {
+
+
+                document.getElementById(
+                    "noMessage"
+                ).style.display = "none";
+
+
+                document.getElementById(
+                    "question"
+                ).style.display = "block";
+
+
+            }, 1500);
+
+        }
+
+
+
+        /* =========================
+           確認日期
+        ========================= */
+
+        function confirmDate() {
+
+
+            const date =
+                document.getElementById(
+                    "date"
+                ).value;
+
+
+            /* 沒選日期 */
+
+            if (date === "") {
+
+
+                document.getElementById(
+                    "result"
+                ).innerHTML =
+
+                    '<div class="message warning">' +
+                    '請先選擇日期 😆' +
+                    '</div>';
+
+
+                return;
+
+            }
+
+
+            /* 顯示成功 */
+
+            document.getElementById(
+                "result"
+            ).innerHTML =
+
+                '<div class="message success">' +
+                '好期待跟妳約會 ❤️' +
+                '</div>' +
+
+                '<p>' +
+                '日期：' +
+                date +
+                '</p>';
+
+        }
+
+    </script>
+
 
 </body>
 </html>

@@ -1,0 +1,851 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>約會邀請</title>
+
+
+    <!-- =========================
+         EmailJS
+    ========================= -->
+
+    <script
+        type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+
+
+    <script>
+
+        /* =========================
+           初始化 EmailJS
+        ========================= */
+
+        emailjs.init({
+            publicKey: "F-4t6phcbgXnSS0tL"
+        });
+
+    </script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           整個網頁
+        ========================= */
+
+        body {
+
+            font-family:
+                Arial,
+                "Microsoft JhengHei",
+                sans-serif;
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            padding-top: 55vh;
+
+            /* 登入前的背景 */
+            background-color: #f5f5f5;
+
+            background-image: none;
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            background-attachment: fixed;
+
+            transition:
+                background-image 0.8s ease;
+        }
+
+
+        /* =========================
+           背景遮罩
+        ========================= */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(255, 255, 255, 0.25);
+
+            z-index: -1;
+        }
+
+
+        /* =========================
+           白色內容框
+        ========================= */
+
+        .box {
+
+            background:
+                rgba(255, 255, 255, 0.88);
+
+            width: 85%;
+
+            max-width: 380px;
+
+            padding: 20px 18px;
+
+            border-radius: 16px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 25px
+                rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* =========================
+           標題
+        ========================= */
+
+        h1 {
+
+            font-size: 23px;
+
+            margin-top: 5px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           一般文字
+        ========================= */
+
+        p {
+
+            font-size: 17px;
+
+            margin: 10px 0;
+        }
+
+
+        /* =========================
+           密碼輸入框
+        ========================= */
+
+        input[type="password"],
+        input[type="date"] {
+
+            font-size: 18px;
+
+            padding: 10px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 10px;
+
+            margin: 10px 0;
+
+            width: 85%;
+
+            max-width: 280px;
+        }
+
+
+        /* =========================
+           按鈕
+        ========================= */
+
+        button {
+
+            font-size: 18px;
+
+            padding: 10px 28px;
+
+            margin: 8px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+        }
+
+
+        /* 是 */
+        .yes {
+
+            background: #4CAF50;
+
+            color: white;
+        }
+
+
+        /* 否 */
+        .no {
+
+            background: #f44336;
+
+            color: white;
+        }
+
+
+        /* 登入 */
+        .login {
+
+            background: #555;
+
+            color: white;
+        }
+
+
+        /* =========================
+           日期區域
+        ========================= */
+
+        .date-section {
+
+            display: none;
+        }
+
+
+        /* =========================
+           否的訊息
+        ========================= */
+
+        .no-message {
+
+            display: none;
+        }
+
+
+        /* =========================
+           訊息
+        ========================= */
+
+        .message {
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            margin: 12px 0;
+        }
+
+
+        .warning {
+
+            color: #f44336;
+        }
+
+
+        .success {
+
+            color: #4CAF50;
+        }
+
+
+        /* =========================
+           寄信狀態
+        ========================= */
+
+        .email-status {
+
+            font-size: 14px;
+
+            margin-top: 10px;
+
+            color: #777;
+        }
+
+
+        /* =========================
+           密碼錯誤
+        ========================= */
+
+        #wrongPassword {
+
+            color: #f44336;
+
+            display: none;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           主要頁面一開始隱藏
+        ========================= */
+
+        #mainPage {
+
+            display: none;
+        }
+
+
+        /* =========================
+           手機版
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding-top: 52vh;
+
+                background-attachment: scroll;
+            }
+
+
+            .box {
+
+                width: 88%;
+
+                max-width: 350px;
+
+                padding: 18px 15px;
+            }
+
+
+            h1 {
+
+                font-size: 21px;
+
+                margin-bottom: 16px;
+            }
+
+
+            p {
+
+                font-size: 16px;
+            }
+
+
+            button {
+
+                font-size: 17px;
+
+                padding: 9px 24px;
+
+                margin: 6px;
+            }
+
+
+            input[type="password"],
+            input[type="date"] {
+
+                font-size: 17px;
+
+                width: 90%;
+            }
+
+
+            .message {
+
+                font-size: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         白色內容框
+    ========================= -->
+
+    <div class="box">
+
+
+        <!-- =========================
+             登入頁面
+        ========================= -->
+
+        <div id="loginPage">
+
+            <h1>
+                🔐 妳的生日(mm/dd)
+            </h1>
+
+
+            <p>
+                請輸入密碼
+            </p>
+
+
+            <input
+                type="password"
+                id="password"
+                placeholder="請輸入密碼"
+            >
+
+
+            <br>
+
+
+            <button
+                class="login"
+                onclick="checkPassword()"
+            >
+                進入
+            </button>
+
+
+            <p id="wrongPassword">
+                密碼錯誤，再試一次 😆
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             主要頁面
+        ========================= -->
+
+        <div id="mainPage">
+
+
+            <!-- =========================
+                 約會問題
+            ========================= -->
+
+            <div id="question">
+
+                <h1>
+                    妳願意跟我出去約會嗎？
+                </h1>
+
+
+                <button
+                    class="yes"
+                    onclick="chooseYes()"
+                >
+                    是
+                </button>
+
+
+                <button
+                    class="no"
+                    onclick="chooseNo()"
+                >
+                    否
+                </button>
+
+            </div>
+
+
+
+            <!-- =========================
+                 選擇否
+            ========================= -->
+
+            <div
+                id="noMessage"
+                class="no-message"
+            >
+
+                <div class="message warning">
+
+                    沒有這個選項 😆
+
+                </div>
+
+
+                <p>
+                    請重新選擇！
+                </p>
+
+            </div>
+
+
+
+            <!-- =========================
+                 選擇是 → 日期
+            ========================= -->
+
+            <div
+                id="dateSection"
+                class="date-section"
+            >
+
+                <p>
+                    請選擇日期：
+                </p>
+
+
+                <input
+                    type="date"
+                    id="date"
+                >
+
+
+                <br>
+
+
+                <button
+                    class="yes"
+                    onclick="confirmDate()"
+                >
+                    確定日期
+                </button>
+
+
+                <div id="result"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+
+        /* =========================
+           密碼
+        ========================= */
+
+        const correctPassword =
+            "1102";
+
+
+
+        /* =========================
+           EmailJS 設定
+        ========================= */
+
+        const EMAIL_SERVICE_ID =
+            "service_2v67h7e";
+
+
+        const EMAIL_TEMPLATE_ID =
+            "template_3ce95it";
+
+
+
+        /* =========================
+           檢查密碼
+        ========================= */
+
+        function checkPassword() {
+
+
+            const password =
+                document.getElementById(
+                    "password"
+                ).value;
+
+
+            if (
+                password ===
+                correctPassword
+            ) {
+
+
+                /* 顯示背景照片 */
+
+                document.body.style.backgroundImage =
+                    'url("first.jpg")';
+
+
+
+                /* 隱藏登入頁面 */
+
+                document.getElementById(
+                    "loginPage"
+                ).style.display =
+                    "none";
+
+
+
+                /* 顯示主要頁面 */
+
+                document.getElementById(
+                    "mainPage"
+                ).style.display =
+                    "block";
+
+
+            } else {
+
+
+                /* 密碼錯誤 */
+
+                document.getElementById(
+                    "wrongPassword"
+                ).style.display =
+                    "block";
+
+            }
+
+        }
+
+
+
+        /* =========================
+           Enter 登入
+        ========================= */
+
+        document.getElementById(
+            "password"
+        ).addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    checkPassword();
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           按「是」
+        ========================= */
+
+        function chooseYes() {
+
+
+            document.getElementById(
+                "question"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "dateSection"
+            ).style.display =
+                "block";
+
+        }
+
+
+
+        /* =========================
+           按「否」
+        ========================= */
+
+        function chooseNo() {
+
+
+            document.getElementById(
+                "question"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "noMessage"
+            ).style.display =
+                "block";
+
+
+            /* 1.5 秒後回到問題 */
+
+            setTimeout(
+                function() {
+
+
+                    document.getElementById(
+                        "noMessage"
+                    ).style.display =
+                        "none";
+
+
+                    document.getElementById(
+                        "question"
+                    ).style.display =
+                        "block";
+
+
+                },
+                1500
+            );
+
+        }
+
+
+
+        /* =========================
+           確認日期
+        ========================= */
+
+
+function confirmDate() {
+
+    const date =
+        document.getElementById("date").value;
+
+
+    /* 沒有選日期 */
+
+    if (date === "") {
+
+        document.getElementById("result").innerHTML =
+
+            '<div class="message warning">' +
+            '請先選擇日期 😆' +
+            '</div>';
+
+        return;
+    }
+
+
+    /* 日期格式 */
+
+    const formattedDate =
+        date.replaceAll("-", "/");
+
+
+    /* =========================
+       顯示「正在寄送」
+    ========================= */
+
+    document.getElementById("dateSection").innerHTML =
+
+        '<div class="message success">' +
+        '期待跟妳約會 ❤️' +
+        '</div>' +
+
+        '<p>' +
+        '日期：' +
+        formattedDate +
+        '</p>' +
+
+        '<p class="email-status">' +
+        '📧 正在寄送通知...' +
+        '</p>';
+
+
+    /* =========================
+       準備寄出的資料
+    ========================= */
+
+    const templateParams = {
+
+        date: formattedDate
+
+    };
+
+
+    /* =========================
+       寄送 Email
+    ========================= */
+
+    emailjs.send(
+        "service_2v67h7e",
+        "template_3ce95it",
+        templateParams
+    )
+
+    .then(function(response) {
+
+        console.log(
+            "Email 寄送成功",
+            response.status,
+            response.text
+        );
+
+
+        /* =========================
+           寄送成功
+        ========================= */
+
+        document.getElementById("dateSection").innerHTML =
+
+            '<div class="message success">' +
+            '期待跟妳約會 ❤️' +
+            '</div>' +
+
+            '<p>' +
+            '日期：' +
+            formattedDate +
+            '</p>' +
+
+            '<p class="email-status">' +
+            '📧 通知已成功寄出！' +
+            '</p>';
+
+    })
+
+    .catch(function(error) {
+
+        console.error(
+            "EmailJS 寄送失敗：",
+            error
+        );
+
+
+        /* =========================
+           寄送失敗
+        ========================= */
+
+        document.getElementById("dateSection").innerHTML =
+
+            '<div class="message success">' +
+            '期待跟妳約會 ❤️' +
+            '</div>' +
+
+            '<p>' +
+            '日期：' +
+            formattedDate +
+            '</p>' +
+
+            '<p class="email-status">' +
+            '⚠️ 通知寄送失敗，請稍後再試。' +
+            '</p>';
+
+    });
+
+}
+
+
+
+    </script>
+
+
+</body>
+
+</html>
+

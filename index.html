@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>約會邀請</title>
 
     <!-- EmailJS -->
@@ -22,132 +21,77 @@
             box-sizing: border-box;
         }
 
-        /* =========================
-           整個網頁與背景照片
-        ========================= */
-
         body {
             font-family: Arial, "Microsoft JhengHei", sans-serif;
             margin: 0;
             min-height: 100vh;
-
             display: flex;
             justify-content: center;
             align-items: flex-start;
-
-            /*
-              調整視窗位置：
-              數值越大，白色視窗越往下。
-            */
-            padding: 58vh 0 30px;
-
+            padding-top: 35vh;
             background-color: #f5f5f5;
             background-image: none;
             background-size: cover;
-
-            /* 優先保留照片上方 */
-            background-position: center top;
-
+            background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-attachment: scroll;
-
-            position: relative;
-            isolation: isolate;
+            transition: background-image 0.8s ease;
         }
 
-        /* 背景照片的淡色遮罩 */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.25);
             z-index: -1;
-            pointer-events: none;
         }
 
-        /* =========================
-           白色內容視窗
-        ========================= */
-
         .box {
-            background: rgba(255, 255, 255, 0.91);
-
-            width: 88%;
+            background: rgba(255, 255, 255, 0.90);
+            width: 85%;
             max-width: 400px;
-
-            padding: 22px 18px;
-            margin: 0 auto 24px;
-
+            padding: 24px 18px;
             border-radius: 16px;
             text-align: center;
-
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.20);
-
-            /* 依照內容自動調整高度 */
-            height: auto;
-            min-height: 0;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
         }
 
         h1 {
             font-size: 23px;
-            line-height: 1.5;
-            margin: 5px 0 20px;
+            margin-top: 5px;
+            margin-bottom: 20px;
         }
 
         p {
             font-size: 17px;
-            line-height: 1.6;
             margin: 10px 0;
         }
-
-        /* =========================
-           輸入欄位
-        ========================= */
 
         input[type="password"],
         input[type="date"] {
-            font-family: inherit;
             font-size: 18px;
-
-            padding: 11px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 10px;
-
             margin: 10px 0;
             width: 90%;
             max-width: 280px;
-
-            background: #fff;
         }
 
-        /* =========================
-           按鈕
-        ========================= */
-
         button {
-            font-family: inherit;
             font-size: 17px;
-
             padding: 11px 24px;
             margin: 7px;
-
             border: none;
             border-radius: 10px;
-
             cursor: pointer;
-            transition: opacity 0.2s, transform 0.2s;
+            transition: transform 0.2s, opacity 0.2s;
         }
 
         button:hover {
             opacity: 0.88;
             transform: translateY(-1px);
-        }
-
-        button:focus-visible,
-        a:focus-visible {
-            outline: 3px solid #5b9dd9;
-            outline-offset: 3px;
         }
 
         .yes {
@@ -165,64 +109,37 @@
             color: white;
         }
 
-        /* =========================
-           餐廳選擇按鈕
-        ========================= */
-
         .restaurant-button {
             display: block;
-
-            width: 100%;
-            max-width: 300px;
-
-            margin: 15px auto;
-            padding: 15px 12px;
-
+            width: 90%;
+            max-width: 290px;
+            margin: 14px auto;
+            padding: 14px 12px;
             background: #fff7f0;
             color: #75452d;
-
             border: 1px solid #e7c9b6;
-            border-radius: 12px;
-
             font-size: 19px;
             font-weight: bold;
         }
 
         .restaurant-link {
             display: inline-block;
-            margin-top: 7px;
-
+            margin-top: 5px;
             color: #3976bd;
             font-size: 14px;
             font-weight: normal;
-
             text-decoration: underline;
         }
 
-        .restaurant-hint {
-            color: #777;
-            font-size: 14px;
-        }
-
-        /* =========================
-           各頁面初始顯示狀態
-        ========================= */
-
-        #mainPage,
-        #restaurantSection,
-        #dateSection,
-        #noMessage {
+        .restaurant-section,
+        .date-section,
+        .no-message {
             display: none;
         }
-
-        /* =========================
-           提示訊息
-        ========================= */
 
         .message {
             font-size: 21px;
             font-weight: bold;
-            line-height: 1.6;
             margin: 12px 0;
         }
 
@@ -235,10 +152,9 @@
         }
 
         .email-status {
-            color: #777;
             font-size: 14px;
-            margin-top: 12px;
-            overflow-wrap: anywhere;
+            margin-top: 10px;
+            color: #777;
         }
 
         #wrongPassword {
@@ -247,33 +163,24 @@
             font-size: 16px;
         }
 
-        /* =========================
-           手機版
-        ========================= */
+        #mainPage {
+            display: none;
+        }
 
         @media (max-width: 600px) {
             body {
-                /*
-                  手機版也將視窗放在偏下方。
-                  可依照片中臉部位置微調。
-                */
-                padding-top: 58vh;
-                padding-bottom: 24px;
-
+                padding-top: 35vh;
                 background-attachment: scroll;
-                background-position: center top;
             }
 
             .box {
                 width: 90%;
                 max-width: 360px;
-                padding: 20px 15px;
-                border-radius: 15px;
+                padding: 20px 14px;
             }
 
             h1 {
                 font-size: 21px;
-                margin-bottom: 16px;
             }
 
             p {
@@ -283,29 +190,14 @@
             button {
                 font-size: 17px;
                 padding: 10px 20px;
-                margin: 6px;
-            }
-
-            input[type="password"],
-            input[type="date"] {
-                font-size: 17px;
-                width: 95%;
             }
 
             .restaurant-button {
                 font-size: 18px;
-                padding: 14px 10px;
             }
 
             .message {
                 font-size: 20px;
-            }
-        }
-
-        /* 螢幕高度較矮時，避免內容太難操作 */
-        @media (max-height: 650px) {
-            body {
-                padding-top: 30vh;
             }
         }
     </style>
@@ -315,94 +207,65 @@
 
     <div class="box">
 
-        <!-- =========================
-             登入頁面
-        ========================= -->
-
+        <!-- 登入頁面 -->
         <div id="loginPage">
-
             <h1>🔐 妳的生日(mm/dd)</h1>
-
             <p>請輸入密碼</p>
 
             <input
                 type="password"
                 id="password"
                 placeholder="請輸入密碼"
-                autocomplete="off"
             >
 
             <br>
 
-            <button
-                class="login"
-                onclick="checkPassword()"
-            >
+            <button class="login" onclick="checkPassword()">
                 進入
             </button>
 
             <p id="wrongPassword">
                 密碼錯誤，再試一次 😆
             </p>
-
         </div>
 
-        <!-- =========================
-             主要頁面
-        ========================= -->
-
+        <!-- 主要頁面 -->
         <div id="mainPage">
 
             <!-- 第一步：約會邀請 -->
-
             <div id="question">
-
                 <h1>妳願意跟我出去約會嗎？</h1>
 
-                <button
-                    class="yes"
-                    onclick="chooseYes()"
-                >
-                    是 ❤️
+                <button class="yes" onclick="chooseYes()">
+                    是
                 </button>
 
-                <button
-                    class="no"
-                    onclick="chooseNo()"
-                >
+                <button class="no" onclick="chooseNo()">
                     否
                 </button>
-
             </div>
 
             <!-- 選擇否 -->
-
-            <div id="noMessage" aria-live="polite">
-
+            <div id="noMessage" class="no-message">
                 <div class="message warning">
                     沒有這個選項 😆
                 </div>
-
                 <p>請重新選擇！</p>
-
             </div>
 
             <!-- 第二步：選擇餐廳 -->
-
-            <div id="restaurantSection">
+            <div id="restaurantSection" class="restaurant-section">
 
                 <h1>🍽️ 那我們要吃哪一間？</h1>
 
-                <p>選一間妳喜歡的餐廳吧！❤️</p>
+                <p>選一間妳喜歡的餐廳吧！</p>
 
                 <button
                     class="restaurant-button"
                     onclick="chooseRestaurant('双円')"
                 >
                     双円
-
                     <br>
-
                     <a
                         class="restaurant-link"
                         href="https://maps.app.goo.gl/7e7QUrxzC5fKsL6S9"
@@ -419,9 +282,7 @@
                     onclick="chooseRestaurant('明水然樂')"
                 >
                     明水然樂
-
                     <br>
-
                     <a
                         class="restaurant-link"
                         href="https://maps.app.goo.gl/ZLGt7aYDXTKk8RK7A"
@@ -433,82 +294,54 @@
                     </a>
                 </button>
 
-                <p class="restaurant-hint">
-                    可以先看看餐廳位置，再決定要吃哪一間喔！
+                <p style="font-size:14px; color:#777;">
+                    點擊餐廳名稱即可選擇，
+                    也可以先查看地圖喔！
                 </p>
-
             </div>
 
             <!-- 第三步：選擇日期 -->
-
-            <div id="dateSection">
+            <div id="dateSection" class="date-section">
 
                 <h1>📅 約會日期</h1>
 
                 <p>妳選擇的餐廳是：</p>
 
-                <div
-                    id="selectedRestaurant"
-                    class="message success"
-                ></div>
+                <div id="selectedRestaurant"
+                     class="message success"></div>
 
                 <p>請選擇想約會的日期：</p>
 
-                <input
-                    type="date"
-                    id="date"
-                >
+                <input type="date" id="date">
 
                 <br>
 
-                <button
-                    class="yes"
-                    onclick="confirmDate()"
-                >
-                    確定日期 ❤️
+                <button class="yes" onclick="confirmDate()">
+                    確定日期
                 </button>
 
-                <br>
-
-                <button
-                    class="login"
-                    onclick="backToRestaurants()"
-                >
+                <button class="login" onclick="backToRestaurants()">
                     重新選擇餐廳
                 </button>
 
-                <div id="result" aria-live="polite"></div>
-
+                <div id="result"></div>
             </div>
 
         </div>
-
     </div>
 
     <script>
-        /* =========================
-           密碼
-        ========================= */
-
+        /* 密碼 */
         const correctPassword = "1102";
 
-        /* =========================
-           EmailJS 設定
-        ========================= */
-
+        /* EmailJS 設定 */
         const EMAIL_SERVICE_ID = "service_2v67h7e";
         const EMAIL_TEMPLATE_ID = "template_3ce95it";
 
-        /* 儲存餐廳選擇 */
+        /* 儲存選擇的餐廳 */
         let selectedRestaurant = "";
 
-        /* 避免重複點擊造成重複寄信 */
-        let isSendingEmail = false;
-
-        /* =========================
-           登入
-        ========================= */
-
+        /* 登入 */
         function checkPassword() {
             const password =
                 document.getElementById("password").value;
@@ -524,14 +357,9 @@
                 document.getElementById("mainPage").style.display =
                     "block";
 
-                document.getElementById("wrongPassword").style.display =
-                    "none";
-
             } else {
-
                 document.getElementById("wrongPassword").style.display =
                     "block";
-
             }
         }
 
@@ -545,10 +373,7 @@
             }
         );
 
-        /* =========================
-           第一步：同意約會
-        ========================= */
-
+        /* 第一步：同意約會 */
         function chooseYes() {
             document.getElementById("question").style.display =
                 "none";
@@ -557,10 +382,7 @@
                 "block";
         }
 
-        /* =========================
-           選擇否
-        ========================= */
-
+        /* 選擇否 */
         function chooseNo() {
             document.getElementById("question").style.display =
                 "none";
@@ -577,10 +399,7 @@
             }, 1500);
         }
 
-        /* =========================
-           第二步：選擇餐廳
-        ========================= */
-
+        /* 第二步：選擇餐廳 */
         function chooseRestaurant(restaurant) {
             selectedRestaurant = restaurant;
 
@@ -593,7 +412,7 @@
             document.getElementById("selectedRestaurant").textContent =
                 restaurant;
 
-            document.getElementById("result").textContent = "";
+            document.getElementById("result").innerHTML = "";
         }
 
         /* 返回餐廳選擇 */
@@ -605,19 +424,12 @@
                 "block";
         }
 
-        /* =========================
-           第三步：確認日期並寄信
-        ========================= */
+        /* 第三步：確認日期並寄信 */
+        function confirmDate() {
+            const date = document.getElementById("date").value;
 
-        async function confirmDate() {
-            const date =
-                document.getElementById("date").value;
-
-            const result =
-                document.getElementById("result");
-
-            if (!date) {
-                result.innerHTML =
+            if (date === "") {
+                document.getElementById("result").innerHTML =
                     '<div class="message warning">' +
                     '請先選擇日期 😆' +
                     '</div>';
@@ -628,77 +440,50 @@
                 return;
             }
 
-            if (isSendingEmail) {
-                return;
-            }
-
             const formattedDate = date.replaceAll("-", "/");
 
-            /* 顯示確認結果 */
             document.getElementById("dateSection").innerHTML =
                 '<div class="message success">' +
                 '期待跟妳約會 ❤️' +
                 '</div>' +
 
-                '<p>餐廳：' +
-                escapeHTML(selectedRestaurant) +
-                '</p>' +
+                '<p>餐廳：' + selectedRestaurant + '</p>' +
 
-                '<p>日期：' +
-                escapeHTML(formattedDate) +
-                '</p>' +
+                '<p>日期：' + formattedDate + '</p>' +
 
-                '<p id="emailStatus" class="email-status" aria-live="polite">' +
+                '<p class="email-status">' +
                 '📧 正在寄送通知...' +
                 '</p>';
 
-            const emailStatus =
-                document.getElementById("emailStatus");
-
+            /* 寄送日期與餐廳 */
             const templateParams = {
                 date: formattedDate,
                 restaurant: selectedRestaurant
             };
 
-            isSendingEmail = true;
-
-            try {
-                await emailjs.send(
-                    EMAIL_SERVICE_ID,
-                    EMAIL_TEMPLATE_ID,
-                    templateParams
+            emailjs.send(
+                EMAIL_SERVICE_ID,
+                EMAIL_TEMPLATE_ID,
+                templateParams
+            )
+            .then(function(response) {
+                console.log(
+                    "Email 寄送成功",
+                    response.status,
+                    response.text
                 );
 
-                emailStatus.textContent =
+                document.querySelector(".email-status").textContent =
                     "📧 通知已成功寄出！";
-
-            } catch (error) {
+            })
+            .catch(function(error) {
                 console.error("EmailJS 寄送失敗：", error);
 
-                emailStatus.textContent =
-                    "⚠️ 通知寄送失敗，請稍後再確認。";
-
-            } finally {
-                isSendingEmail = false;
-            }
-        }
-
-        /* 避免將文字當成 HTML 插入頁面 */
-        function escapeHTML(value) {
-            return String(value).replace(/[&<>"']/g, function(char) {
-                const entities = {
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    '"': "&quot;",
-                    "'": "&#39;"
-                };
-
-                return entities[char];
+                document.querySelector(".email-status").textContent =
+                    "⚠️ 通知寄送失敗，請稍後再試。";
             });
         }
     </script>
 
 </body>
-
 </html>
